@@ -1,0 +1,15 @@
+import os
+os.environ['KERAS_BACKEND']='theano'
+
+import os
+
+with open(os.path.expanduser('~')+'/.keras/keras.json','w') as f:
+    new_settings = """{\r\n
+    "epsilon": 1e-07,\r\n
+    "image_data_format": "channels_last",\n
+    "backend": "theano",\r\n
+    "floatx": "float32"\r\n
+    }"""
+    f.write(new_settings)
+
+import keras
