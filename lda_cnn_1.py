@@ -107,6 +107,26 @@ all_frequence = all_frequence.astype(np.int32)
 LDA_model = LatentDirichletAllocation(n_components=5,max_iter=1000,random_state=0)
 LDA_model.fit(all_frequence)
 #%%
+tt = LDA_model.fit_transform(all_frequence)
+#%%
+from sklearn.manifold import TSNE
+tsne_model = TSNE(n_components =2, verbose =1, random_state =0, angle =.99, init='pca')
+tsne_lda = tsne_model .fit_transform(tt)
+#%%
+colormap = np .array(["#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c"
+                      ])
+#"#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5",
+#                      "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f",
+#                      "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5"
+
+lda_keys = []
+for i in range(tt .shape[0]):
+    lda_keys += tt[i] .argmax(),
+
+num_example = len(tt)
+
+plt.scatter(tsne_lda[:, 0],tsne_lda[:, 1],color =colormap[lda_keys][:num_example])
+#%%
 new = LDA_model.components_ / LDA_model.components_.sum(axis=1)[:, np.newaxis]
 
 import numpy as np
